@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Tetronimo(
+module Falling_Block(
     input [199:0] Game_Board,
     input clock,
     input [2:0] tetronimo_type,
@@ -117,3 +117,198 @@ module Tetronimo(
         end
     end
 endmodule
+
+module Tetronimo(
+input [2:0] tetronimo_type,
+input [1:0] rot,
+input [8:0] corner,
+
+output reg [8:0] block0,//Board location of tetronimo{[8:5] = X , [4:0] = Y}
+output reg [8:0] block1,
+output reg [8:0] block2,
+output reg [8:0] block3);
+wire X,Y;
+assign X = corner[8:5];
+assign Y = corner[4:0];
+always@(*)
+    case(tetronimo_type)
+        0: begin//Cyan line
+            case(rot)
+                0: begin
+                    block0 ={X,Y-1};
+                    block1={X+1,Y-1};
+                    block2={X+2,Y-1};
+                    block3={X+3,Y-1};
+                end
+                1: begin
+                    block0={X+2,Y};
+                    block1={X+2,Y-1};
+                    block2={X+2,Y-2};
+                    block3={X+2,Y-3};
+                end
+                2: begin
+                    block0 ={X,Y-2};
+                    block1={X+1,Y-2};
+                    block2={X+2,Y-2};
+                    block3={X+3,Y-2};
+                end
+                3: begin
+                    block0 ={X+1,Y};
+                    block1={X+1,Y-1};
+                    block2={X+1,Y-2};
+                    block3={X+1,Y-3};
+                end
+            endcase
+        end
+        1: begin//blue reverse L
+            case(rot)
+                0: begin
+                    block0 ={X,Y};
+                    block1={X,Y-1};
+                    block2={X+1,Y-1};
+                    block3={X+2,Y-1};
+                end
+                1: begin
+                    block0={X+1,Y};
+                    block1={X+2,Y};
+                    block2={X+1,Y-1};
+                    block3={X+1,Y-2};
+                end
+                2: begin
+                    block0 ={X,Y-1};
+                    block1={X+1,Y-1};
+                    block2={X+2,Y-1};
+                    block3={X+2,Y-2};
+                end
+                3: begin
+                    block0 ={X,Y-2};
+                    block1={X+1,Y};
+                    block2={X+1,Y-1};
+                    block3={X+1,Y-2};
+                end
+            endcase
+        end
+        2: begin//Orange L
+            case(rot)
+                0: begin
+                    block0 ={X+2,Y};
+                    block1={X,Y-1};
+                    block2={X+1,Y-1};
+                    block3={X+2,Y-1};
+                end
+                1: begin
+                    block0={X+1,Y};
+                    block1={X+2,Y-2};
+                    block2={X+1,Y-1};
+                    block3={X+1,Y-2};
+                end
+                2: begin
+                    block0 ={X,Y-1};
+                    block1={X+1,Y-1};
+                    block2={X+2,Y-1};
+                    block3={X,Y-2};
+                end
+                3: begin
+                    block0 ={X,Y};
+                    block1={X+1,Y};
+                    block2={X+1,Y-1};
+                    block3={X+1,Y-2};
+                end
+            endcase
+        end
+        3: begin //Yellow square
+            block0 ={X+1,Y};
+            block1={X+2,Y};
+            block2={X+1,Y-1};
+            block3={X+2,Y-1}; 
+        end
+        4 : begin//green snake
+            case(rot)
+                0: begin
+                    block0 ={X,Y-1};
+                    block1={X+1,Y};
+                    block2={X+1,Y-1};
+                    block3={X+2,Y};
+                end
+                1: begin
+                    block0={X+1,Y};
+                    block1={X+1,Y-1};
+                    block2={X+2,Y-1};
+                    block3={X+2,Y-2};
+                end
+                2: begin
+                    block0 ={X,Y-2};
+                    block1={X+1,Y-1};
+                    block2={X+1,Y-2};
+                    block3={X+3,Y-1};
+                end
+                3: begin
+                    block0 ={X,Y};
+                    block1={X,Y-1};
+                    block2={X+1,Y-1};
+                    block3={X+1,Y-2};
+                end
+            endcase
+        end
+        5 : begin//purple T
+            case(rot)
+                0: begin
+                    block0 ={X+1,Y};
+                    block1={X,Y-1};
+                    block2={X+1,Y-1};
+                    block3={X+2,Y-1};
+                end
+                1: begin
+                    block0={X+2,Y-1};
+                    block1={X+1,Y};
+                    block2={X+1,Y-1};
+                    block3={X+1,Y-2};
+                end
+                2: begin
+                    block0 ={X+1,Y-2};
+                    block1={X,Y-1};
+                    block2={X+1,Y-1};
+                    block3={X+2,Y-1};
+                end
+                3: begin
+                    block0 ={X,Y-1};
+                    block1={X+1,Y};
+                    block2={X+1,Y-1};
+                    block3={X+1,Y-2};
+                end
+            endcase
+        end
+        5 : begin//red snake
+            case(rot)
+                0: begin
+                    block0 ={X+2,Y-1};
+                    block1={X+1,Y};
+                    block2={X+1,Y-1};
+                    block3={X,Y};
+                end
+                1: begin
+                    block0={X+2,Y};
+                    block1={X+1,Y-1};
+                    block2={X+2,Y-1};
+                    block3={X+1,Y-2};
+                end
+                2: begin
+                    block0 ={X,Y-1};
+                    block1={X+1,Y-1};
+                    block2={X+1,Y-2};
+                    block3={X+3,Y-2};
+                end
+                3: begin
+                    block0 ={X+1,Y};
+                    block1={X,Y-1};
+                    block2={X+1,Y-1};
+                    block3={X,Y-2};
+                end
+            endcase
+        end
+        default : begin
+            {block0,block1,block2,block3}=0;
+        end
+    endcase
+endmodule
+
