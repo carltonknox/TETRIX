@@ -1,23 +1,20 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 11/03/2022 07:56:01 PM
-// Design Name: 
-// Module Name: Tetronimo
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+/***
+    Falling block is a "object" representing the currently falling
+    Tetronimo. Tetronimo is a module which calculates the coordinates
+    of the four block locations of each tetronimo in each orientation. 
+    It is very long, but basically follows the picture here:
+    https://tetris.fandom.com/wiki/SRS?file=SRS-pieces.png
+    Where tetronimo_type is 0-6 along the vertical from top to bottom,
+    and "rot" is the rotation, 0-3 from left to right
+    You can take the output "block0, block 1, etc" as the x and y coordinates of the 10 by 20 grid
+    defined by this image : https://i0.wp.com/colinfahey.com/tetris/tetris_diagram_board_10x20_empty_new.jpg?zoom=2
+    The first 4 bits are X and the next 5 bits are Y. 
+    Falling_Block uses two Tetronimo module, one to calculate the current block position, and one to calculate the next block position, according to user input. 
+    If the next block position results in out of bounds, or collision, the block will remain in the current position. If the fall input is 1,
+    and Falling_Block cannot fall, fail_fall will be set to 1.
+    init blocks will start out of bounds. If a block is out of bounds and fails to fall, the game should be over
+***/
 
 
 module Falling_Block(
@@ -28,12 +25,11 @@ module Falling_Block(
     input fall,
     input [3:0] direct,//0000 = no input, 0001 = right, 0010 = left, 0100 = up (insta fall), 1000 = down (slow fast fall), 0011 = rotate right 1100 = rotate left 
     output reg fail_fall,//cannot fall
-    output reg [8:0] block0,//Board location of tetronimo{[8:5] = X , [4:0] = Y}
-    output reg [8:0] block1,
-    output reg [8:0] block2,
-    output reg [8:0] block3,
+    output  [8:0] block0,//Board location of tetronimo{[8:5] = X , [4:0] = Y}
+    output  [8:0] block1,
+    output  [8:0] block2,
+    output  [8:0] block3,
     output [3:0] out_of_bounds//out of bounds
-    
     );
     /**
     A generic tetronimo is defined by a 4by4 space, and each tetronimos has 4 blocks in this space. cornerX and Y define the bottom left corner. 
@@ -44,6 +40,7 @@ module Falling_Block(
     reg [8:5] next_cornerX;
     reg [4:0] next_cornerY;
     wire [3:0] next_out_of_bounds;
+    //TODO implement collision detection
     wire [3:0] next_collision;
     reg [1:0] rot;//rotation orientation
     reg [1:0] next_rot;
@@ -54,16 +51,19 @@ module Falling_Block(
     
     
     //next block locations and out of bounds
-    reg [8:0] next_block0;
-    reg [8:0] next_block1;
-    reg [8:0] next_block2;
-    reg [8:0] next_block3;
+    wire [8:0] next_block0;
+    wire [8:0] next_block1;
+    wire [8:0] next_block2;
+    wire [8:0] next_block3;
     assign next_out_of_bounds[0] = next_block0[8:5] >9 || next_block0[4:0] > 19;
     assign next_out_of_bounds[1] = next_block1[8:5] >9 || next_block1[4:0] > 19;
     assign next_out_of_bounds[2] = next_block2[8:5] >9 || next_block2[4:0] > 19;
     assign next_out_of_bounds[3] = next_block3[8:5] >9 || next_block3[4:0] > 19;
     
     
+    //Tetronimo types and rotations
+    Tetronimo T_current(tetronimo_type,rot,{cornerX,cornerY},block0,block1,block2,block3);
+    Tetronimo T_next(tetronimo_type,next_rot,{next_cornerX,next_cornerY},next_block0,next_block1,next_block2,next_block3);
     
     
     always@(posedge clock) begin
@@ -278,7 +278,7 @@ always@(*)
                 end
             endcase
         end
-        5 : begin//red snake
+        6 : begin//red snake
             case(rot)
                 0: begin
                     block0 ={X+2,Y-1};
