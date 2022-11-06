@@ -88,6 +88,8 @@ module Falling_Block(
             //set block to top
             cornerX=4;
             cornerY=18;
+            next_cornerX=cornerX;
+            next_cornerY=cornerY;
             rot=0;
             fail_fall=fall;
         end
