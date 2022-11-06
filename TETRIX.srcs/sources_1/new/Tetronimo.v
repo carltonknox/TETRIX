@@ -50,6 +50,7 @@ module Falling_Block(
     assign out_of_bounds[3] = block3[8:5] >9 || block3[4:0] > 19;
     
     
+    
     //next block locations and out of bounds
     wire [8:0] next_block0;
     wire [8:0] next_block1;
@@ -60,11 +61,27 @@ module Falling_Block(
     assign next_out_of_bounds[2] = next_block2[8:5] >9 || next_block2[4:0] > 19;
     assign next_out_of_bounds[3] = next_block3[8:5] >9 || next_block3[4:0] > 19;
     
-    
+    //next collision, check if next location is alerady occupied
+    assign next_collision[0] = Game_Board[next_block0[8:5] + next_block0[4:0]*10];
+    assign next_collision[1] = Game_Board[next_block1[8:5] + next_block1[4:0]*10];
+    assign next_collision[2] = Game_Board[next_block2[8:5] + next_block2[4:0]*10];
+    assign next_collision[3] = Game_Board[next_block3[8:5] + next_block3[4:0]*10];
+
     //Tetronimo types and rotations
     Tetronimo T_current(tetronimo_type,rot,{cornerX,cornerY},block0,block1,block2,block3);
     Tetronimo T_next(tetronimo_type,next_rot,{next_cornerX,next_cornerY},next_block0,next_block1,next_block2,next_block3);
     
+    always@(posedge clock) begin
+        if(~(next_out_of_bounds || next_collision || init)) begin
+                    cornerX <= next_cornerX;
+                    cornerY <= next_cornerY;
+                    rot <= next_rot;
+                    fail_fall <= 0;
+                end
+            else 
+                fail_fall <= fall;
+        
+    end
     
     always@(posedge clock) begin
         if(init) begin
@@ -104,16 +121,7 @@ module Falling_Block(
                 end
                 
                 endcase
-            end
-            
-            if(~(next_out_of_bounds || next_collision)) begin
-                    cornerX = next_cornerX;
-                    cornerY = next_cornerY;
-                    rot = next_rot;
-                    fail_fall = 0;
-                end
-            else 
-                fail_fall = fall;
+            end          
         end
     end
 endmodule
@@ -127,182 +135,183 @@ output reg [8:0] block0,//Board location of tetronimo{[8:5] = X , [4:0] = Y}
 output reg [8:0] block1,
 output reg [8:0] block2,
 output reg [8:0] block3);
-wire X,Y;
+wire [8:5] X;
+wire [4:0] Y;
 assign X = corner[8:5];
 assign Y = corner[4:0];
-always@(*)
+always@(tetronimo_type,rot,X,Y)
     case(tetronimo_type)
         0: begin//Cyan line
             case(rot)
                 0: begin
-                    block0 ={X,Y-1};
-                    block1={X+1,Y-1};
-                    block2={X+2,Y-1};
-                    block3={X+3,Y-1};
+                    block0[8:5] = X;    block0[4:0] = Y-1;
+                    block1[8:5] = X+1;  block1[4:0] = Y-1;
+                    block2[8:5] = X+2;  block2[8:5] = Y-1;
+                    block3[8:5] = X+3;  block3[8:5] = Y-1;
                 end
                 1: begin
-                    block0={X+2,Y};
-                    block1={X+2,Y-1};
-                    block2={X+2,Y-2};
-                    block3={X+2,Y-3};
+                    block0[8:5] = X+2;  block0[8:5] = Y;
+                    block1[8:5] = X+2;  block1[8:5] = Y-1;
+                    block2[8:5] = X+2;  block2[8:5] = Y-2;
+                    block3[8:5] = X+2;  block3[8:5] = Y-3;
                 end
                 2: begin
-                    block0 ={X,Y-2};
-                    block1={X+1,Y-2};
-                    block2={X+2,Y-2};
-                    block3={X+3,Y-2};
+                    block0[8:5] = X;    block0[4:0] = Y-2;
+                    block1[8:5] = X+1;  block1[4:0] = Y-2;
+                    block2[8:5] = X+2;  block2[4:0] = Y-2;
+                    block3[8:5] = X+3;  block3[4:0] = Y-2;
                 end
                 3: begin
-                    block0 ={X+1,Y};
-                    block1={X+1,Y-1};
-                    block2={X+1,Y-2};
-                    block3={X+1,Y-3};
+                    block0[8:5] = X+1;      block0[4:0] = Y;
+                    block1[8:5] = X+1;      block1[4:0] = Y-1;
+                    block2[8:5] = X+1;      block2[4:0] = Y-2;
+                    block3[8:5] = X+1;      block3[4:0] = Y-3;
                 end
             endcase
         end
         1: begin//blue reverse L
             case(rot)
                 0: begin
-                    block0 ={X,Y};
-                    block1={X,Y-1};
-                    block2={X+1,Y-1};
-                    block3={X+2,Y-1};
+                    block0[8:5] = X;        block0[4:0] = Y;
+                    block1[8:5] = X;        block1[4:0] = Y-1;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+2;      block3[4:0] = Y-1;
                 end
                 1: begin
-                    block0={X+1,Y};
-                    block1={X+2,Y};
-                    block2={X+1,Y-1};
-                    block3={X+1,Y-2};
+                    block0[8:5] = X+1;      block0[4:0] = Y;
+                    block1[8:5] = X+2;      block1[4:0] = Y;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+1;      block3[4:0] = Y-2;
                 end
                 2: begin
-                    block0 ={X,Y-1};
-                    block1={X+1,Y-1};
-                    block2={X+2,Y-1};
-                    block3={X+2,Y-2};
+                    block0[8:5] = X;        block0[4:0] = Y-1;
+                    block1[8:5] = X+1;      block1[4:0] = Y-1;
+                    block2[8:5] = X+2;      block2[4:0] = Y-1;
+                    block3[8:5] = X+2;      block3[4:0] = Y-2;
                 end
                 3: begin
-                    block0 ={X,Y-2};
-                    block1={X+1,Y};
-                    block2={X+1,Y-1};
-                    block3={X+1,Y-2};
+                    block0[8:5] = X;        block0[4:0] = Y-2;
+                    block1[8:5] = X+1;      block1[4:0] = Y;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+1;      block3[4:0] = Y-2;
                 end
             endcase
         end
         2: begin//Orange L
             case(rot)
                 0: begin
-                    block0 ={X+2,Y};
-                    block1={X,Y-1};
-                    block2={X+1,Y-1};
-                    block3={X+2,Y-1};
+                    block0[8:5] = X+2;      block0[4:0] = Y;
+                    block1[8:5] = X;        block1[4:0] = Y-1;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+2;      block3[4:0] = Y-1;
                 end
                 1: begin
-                    block0={X+1,Y};
-                    block1={X+2,Y-2};
-                    block2={X+1,Y-1};
-                    block3={X+1,Y-2};
+                    block0[8:5] = X+1;      block0[4:0] = Y;
+                    block1[8:5] = X+2;      block1[4:0] = Y-2;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+1;      block3[4:0] = Y-2;
                 end
                 2: begin
-                    block0 ={X,Y-1};
-                    block1={X+1,Y-1};
-                    block2={X+2,Y-1};
-                    block3={X,Y-2};
+                    block0[8:5] = X;        block0[4:0] = Y-1;
+                    block1[8:5] = X+1;      block1[4:0] = Y-1;
+                    block2[8:5] = X+2;      block2[4:0] = Y-1;
+                    block3[8:5] = X;        block3[4:0] = Y-2;
                 end
                 3: begin
-                    block0 ={X,Y};
-                    block1={X+1,Y};
-                    block2={X+1,Y-1};
-                    block3={X+1,Y-2};
+                    block0[8:5] = X;        block0[4:0] = Y;
+                    block1[8:5] = X+1;      block1[4:0] = Y;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+1;      block3[4:0] = Y-2;
                 end
             endcase
         end
         3: begin //Yellow square
-            block0 ={X+1,Y};
-            block1={X+2,Y};
-            block2={X+1,Y-1};
-            block3={X+2,Y-1}; 
+            block0[8:5] = X+1;      block0[4:0] = Y;
+            block1[8:5] = X+2;      block1[4:0] = Y;
+            block2[8:5] = X+1;      block2[4:0] = Y-1;
+            block3[8:5] = X+2;      block3[4:0] = Y-1;
         end
         4 : begin//green snake
             case(rot)
                 0: begin
-                    block0 ={X,Y-1};
-                    block1={X+1,Y};
-                    block2={X+1,Y-1};
-                    block3={X+2,Y};
+                    block0[8:5] = X;        block0[4:0] = Y-1;
+                    block1[8:5] = X+1;      block1[4:0] = Y;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+2;      block3[4:0] = Y;
                 end
                 1: begin
-                    block0={X+1,Y};
-                    block1={X+1,Y-1};
-                    block2={X+2,Y-1};
-                    block3={X+2,Y-2};
+                    block0[8:5] = X+1;      block0[4:0] = Y;
+                    block1[8:5] = X+1;      block1[4:0] = Y-1;
+                    block2[8:5] = X+2;      block2[4:0] = Y-1;
+                    block3[8:5] = X+2;      block3[4:0] = Y-2;
                 end
                 2: begin
-                    block0 ={X,Y-2};
-                    block1={X+1,Y-1};
-                    block2={X+1,Y-2};
-                    block3={X+3,Y-1};
+                    block0[8:5] = X;        block0[4:0] = Y-2;
+                    block1[8:5] = X+1;      block1[4:0] = Y-1;
+                    block2[8:5] = X+1;      block2[4:0] = Y-2;
+                    block3[8:5] = X+3;      block3[4:0] = Y-1;
                 end
                 3: begin
-                    block0 ={X,Y};
-                    block1={X,Y-1};
-                    block2={X+1,Y-1};
-                    block3={X+1,Y-2};
+                    block0[8:5] = X;        block0[4:0] = Y;
+                    block1[8:5] = X;        block1[4:0] = Y-1;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+1;      block3[4:0] = Y-2;
                 end
             endcase
         end
         5 : begin//purple T
             case(rot)
                 0: begin
-                    block0 ={X+1,Y};
-                    block1={X,Y-1};
-                    block2={X+1,Y-1};
-                    block3={X+2,Y-1};
+                    block0[8:5] = X+1;      block0[4:0] = Y;
+                    block1[8:5] = X;        block1[4:0] = Y-1;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+2;      block3[4:0] = Y-1;
                 end
                 1: begin
-                    block0={X+2,Y-1};
-                    block1={X+1,Y};
-                    block2={X+1,Y-1};
-                    block3={X+1,Y-2};
+                    block0[8:5] = X+2;      block0[4:0] = Y-1;
+                    block1[8:5] = X+1;      block1[4:0] = Y;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+1;      block3[4:0] = Y-2;
                 end
                 2: begin
-                    block0 ={X+1,Y-2};
-                    block1={X,Y-1};
-                    block2={X+1,Y-1};
-                    block3={X+2,Y-1};
+                    block0[8:5] = X+1;      block0[4:0] = Y-2;
+                    block1[8:5] = X;        block1[4:0] = Y-1;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+2;      block3[4:0] = Y-1;
                 end
                 3: begin
-                    block0 ={X,Y-1};
-                    block1={X+1,Y};
-                    block2={X+1,Y-1};
-                    block3={X+1,Y-2};
+                    block0[8:5] = X;        block0[4:0] = Y-1;
+                    block1[8:5] = X+1;      block1[4:0] = Y;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X+1;      block3[4:0] = Y-2;
                 end
             endcase
         end
         6 : begin//red snake
             case(rot)
                 0: begin
-                    block0 ={X+2,Y-1};
-                    block1={X+1,Y};
-                    block2={X+1,Y-1};
-                    block3={X,Y};
+                    block0[8:5] = X+2;      block0[4:0] = Y-1;
+                    block1[8:5] = X+1;      block1[4:0] = Y;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X;        block3[4:0] = Y;
                 end
                 1: begin
-                    block0={X+2,Y};
-                    block1={X+1,Y-1};
-                    block2={X+2,Y-1};
-                    block3={X+1,Y-2};
+                    block0[8:5] = X+2;      block0[4:0] = Y;
+                    block1[8:5] = X+1;      block1[4:0] = Y-1;
+                    block2[8:5] = X+2;      block2[4:0] = Y-1;
+                    block3[8:5] = X+1;      block3[4:0] = Y-2;
                 end
                 2: begin
-                    block0 ={X,Y-1};
-                    block1={X+1,Y-1};
-                    block2={X+1,Y-2};
-                    block3={X+3,Y-2};
+                    block0[8:5] = X;        block0[4:0] = Y-1;
+                    block1[8:5] = X+1;      block1[4:0] = Y-1;
+                    block2[8:5] = X+1;      block2[4:0] = Y-2;
+                    block3[8:5] = X+3;      block3[4:0] = Y-2;
                 end
                 3: begin
-                    block0 ={X+1,Y};
-                    block1={X,Y-1};
-                    block2={X+1,Y-1};
-                    block3={X,Y-2};
+                    block0[8:5] = X+1;      block0[4:0] = Y;
+                    block1[8:5] = X;        block1[4:0] = Y-1;
+                    block2[8:5] = X+1;      block2[4:0] = Y-1;
+                    block3[8:5] = X;        block3[4:0] = Y-2;
                 end
             endcase
         end

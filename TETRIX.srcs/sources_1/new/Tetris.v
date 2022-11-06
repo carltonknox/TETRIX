@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 11/03/2022 02:53:18 PM
+// Create Date: 11/05/2022 02:56:27 AM
 // Design Name: 
-// Module Name: TETRIX
+// Module Name: Tetris
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,12 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module TETRIX(
-    input clock,
-    output [199:0] G0,
-    output [199:0] G1,
-    output [199:0] G2,
-    output [199:0] G3
+module Tetris(
+
     );
-    Tetris T();
+    Falling_Block FB();
 endmodule

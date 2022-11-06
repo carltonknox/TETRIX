@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="FB_testbench_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="FB_testbench" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="148333334fs"></ZoomStartTime>
+      <ZoomEndTime time="1148333335fs"></ZoomEndTime>
+      <Cursor1Time time="315000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="146"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="16" />
+   <wvobject fp_name="/FB_testbench/Game_Board" type="array">
+      <obj_property name="ElementShortName">Game_Board[199:0]</obj_property>
+      <obj_property name="ObjectShortName">Game_Board[199:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/clock" type="logic">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/tetronimo_type" type="array">
+      <obj_property name="ElementShortName">tetronimo_type[2:0]</obj_property>
+      <obj_property name="ObjectShortName">tetronimo_type[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/init" type="logic">
+      <obj_property name="ElementShortName">init</obj_property>
+      <obj_property name="ObjectShortName">init</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/fall" type="logic">
+      <obj_property name="ElementShortName">fall</obj_property>
+      <obj_property name="ObjectShortName">fall</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/direct" type="array">
+      <obj_property name="ElementShortName">direct[3:0]</obj_property>
+      <obj_property name="ObjectShortName">direct[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/fail_fall" type="logic">
+      <obj_property name="ElementShortName">fail_fall</obj_property>
+      <obj_property name="ObjectShortName">fail_fall</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/X0" type="array">
+      <obj_property name="ElementShortName">X0[8:5]</obj_property>
+      <obj_property name="ObjectShortName">X0[8:5]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/X1" type="array">
+      <obj_property name="ElementShortName">X1[8:5]</obj_property>
+      <obj_property name="ObjectShortName">X1[8:5]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/X2" type="array">
+      <obj_property name="ElementShortName">X2[8:5]</obj_property>
+      <obj_property name="ObjectShortName">X2[8:5]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/X3" type="array">
+      <obj_property name="ElementShortName">X3[8:5]</obj_property>
+      <obj_property name="ObjectShortName">X3[8:5]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/Y0" type="array">
+      <obj_property name="ElementShortName">Y0[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Y0[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/Y1" type="array">
+      <obj_property name="ElementShortName">Y1[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Y1[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/Y2" type="array">
+      <obj_property name="ElementShortName">Y2[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Y2[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/Y3" type="array">
+      <obj_property name="ElementShortName">Y3[4:0]</obj_property>
+      <obj_property name="ObjectShortName">Y3[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/out_of_bounds" type="array">
+      <obj_property name="ElementShortName">out_of_bounds[3:0]</obj_property>
+      <obj_property name="ObjectShortName">out_of_bounds[3:0]</obj_property>
+   </wvobject>
+</wave_config>
