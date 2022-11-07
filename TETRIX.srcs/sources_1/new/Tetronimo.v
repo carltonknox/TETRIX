@@ -141,21 +141,21 @@ wire [8:5] X;
 wire [4:0] Y;
 assign X = corner[8:5];
 assign Y = corner[4:0];
-always@(tetronimo_type,rot,X,Y)
+always@(*)
     case(tetronimo_type)
         0: begin//Cyan line
             case(rot)
                 0: begin
                     block0[8:5] = X;    block0[4:0] = Y-1;
                     block1[8:5] = X+1;  block1[4:0] = Y-1;
-                    block2[8:5] = X+2;  block2[8:5] = Y-1;
-                    block3[8:5] = X+3;  block3[8:5] = Y-1;
+                    block2[8:5] = X+2;  block2[4:0] = Y-1;
+                    block3[8:5] = X+3;  block3[4:0] = Y-1;
                 end
                 1: begin
-                    block0[8:5] = X+2;  block0[8:5] = Y;
-                    block1[8:5] = X+2;  block1[8:5] = Y-1;
-                    block2[8:5] = X+2;  block2[8:5] = Y-2;
-                    block3[8:5] = X+2;  block3[8:5] = Y-3;
+                    block0[8:5] = X+2;  block0[4:0] = Y;
+                    block1[8:5] = X+2;  block1[4:0] = Y-1;
+                    block2[8:5] = X+2;  block2[4:0] = Y-2;
+                    block3[8:5] = X+2;  block3[4:0] = Y-3;
                 end
                 2: begin
                     block0[8:5] = X;    block0[4:0] = Y-2;
