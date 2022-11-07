@@ -58,7 +58,7 @@ module FB_testbench(
         tetronimo_type = 2;
         direct = 4'b0001;
         #10 init = 0;
-        #60 fall = 1;
+        #100 fall = 1;
         #50 fall = 0;
         direct=4'b0011;
         #100 direct = 0;

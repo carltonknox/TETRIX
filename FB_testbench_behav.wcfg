@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="148333334fs"></ZoomStartTime>
-      <ZoomEndTime time="1148333335fs"></ZoomEndTime>
-      <Cursor1Time time="315000000fs"></Cursor1Time>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="1000001fs"></ZoomEndTime>
+      <Cursor1Time time="435000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="146"></ValueColumnWidth>
+      <ValueColumnWidth column_width="142"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="16" />
+   <WVObjectSize size="27" />
    <wvobject fp_name="/FB_testbench/Game_Board" type="array">
       <obj_property name="ElementShortName">Game_Board[199:0]</obj_property>
       <obj_property name="ObjectShortName">Game_Board[199:0]</obj_property>
@@ -87,9 +87,64 @@
       <obj_property name="ElementShortName">Y3[4:0]</obj_property>
       <obj_property name="ObjectShortName">Y3[4:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject fp_name="/FB_testbench/out_of_bounds" type="array">
       <obj_property name="ElementShortName">out_of_bounds[3:0]</obj_property>
       <obj_property name="ObjectShortName">out_of_bounds[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/next_out_of_bounds" type="array">
+      <obj_property name="ElementShortName">next_out_of_bounds[3:0]</obj_property>
+      <obj_property name="ObjectShortName">next_out_of_bounds[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/next_collision" type="array">
+      <obj_property name="ElementShortName">next_collision[3:0]</obj_property>
+      <obj_property name="ObjectShortName">next_collision[3:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/nX0" type="array">
+      <obj_property name="ElementShortName">nX0[8:5]</obj_property>
+      <obj_property name="ObjectShortName">nX0[8:5]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/nX1" type="array">
+      <obj_property name="ElementShortName">nX1[8:5]</obj_property>
+      <obj_property name="ObjectShortName">nX1[8:5]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/nX2" type="array">
+      <obj_property name="ElementShortName">nX2[8:5]</obj_property>
+      <obj_property name="ObjectShortName">nX2[8:5]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/nX3" type="array">
+      <obj_property name="ElementShortName">nX3[8:5]</obj_property>
+      <obj_property name="ObjectShortName">nX3[8:5]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/nY0" type="array">
+      <obj_property name="ElementShortName">nY0[4:0]</obj_property>
+      <obj_property name="ObjectShortName">nY0[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/nY1" type="array">
+      <obj_property name="ElementShortName">nY1[4:0]</obj_property>
+      <obj_property name="ObjectShortName">nY1[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/nY2" type="array">
+      <obj_property name="ElementShortName">nY2[4:0]</obj_property>
+      <obj_property name="ObjectShortName">nY2[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/nY3" type="array">
+      <obj_property name="ElementShortName">nY3[4:0]</obj_property>
+      <obj_property name="ObjectShortName">nY3[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/FB_testbench/FB/coord0" type="array">
+      <obj_property name="ElementShortName">coord0[8:0]</obj_property>
+      <obj_property name="ObjectShortName">coord0[8:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

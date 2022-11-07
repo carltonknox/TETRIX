@@ -41,7 +41,7 @@ module Falling_Block(
     reg [4:0] next_cornerY;
     wire [3:0] next_out_of_bounds;
     //TODO implement collision detection
-    wire [3:0] next_collision;
+    reg [3:0] next_collision;
     reg [1:0] rot;//rotation orientation
     reg [1:0] next_rot;
     assign out_of_bounds[0] = block0[8:5] >9 || block0[4:0] > 19;
@@ -56,21 +56,39 @@ module Falling_Block(
     wire [8:0] next_block1;
     wire [8:0] next_block2;
     wire [8:0] next_block3;
-    assign next_out_of_bounds[0] = next_block0[8:5] >9 || next_block0[4:0] > 19;
-    assign next_out_of_bounds[1] = next_block1[8:5] >9 || next_block1[4:0] > 19;
-    assign next_out_of_bounds[2] = next_block2[8:5] >9 || next_block2[4:0] > 19;
-    assign next_out_of_bounds[3] = next_block3[8:5] >9 || next_block3[4:0] > 19;
+    assign next_out_of_bounds[0] = next_block0[8:5] >9 || next_block0[4:0] > 21;
+    assign next_out_of_bounds[1] = next_block1[8:5] >9 || next_block1[4:0] > 21;
+    assign next_out_of_bounds[2] = next_block2[8:5] >9 || next_block2[4:0] > 21;
+    assign next_out_of_bounds[3] = next_block3[8:5] >9 || next_block3[4:0] > 21;
     
     //next collision, check if next location is alerady occupied
-    assign next_collision[0] = Game_Board[next_block0[8:5] + next_block0[4:0]*10];
-    assign next_collision[1] = Game_Board[next_block1[8:5] + next_block1[4:0]*10];
-    assign next_collision[2] = Game_Board[next_block2[8:5] + next_block2[4:0]*10];
-    assign next_collision[3] = Game_Board[next_block3[8:5] + next_block3[4:0]*10];
+    wire [8:5] nX0,nX1,nX2,nX3;
+    wire [4:0] nY0,nY1,nY2,nY3;
+    assign {nX0,nY0} = next_block0;
+    assign {nX1,nY1} = next_block1;
+    assign {nX2,nY2} = next_block2;
+    assign {nX3,nY3} = next_block3;
+    integer coord0,coord1,coord2,coord3;
+    
+    always@(*) begin
+        coord0 = nX0 + nY0*10;
+        coord1 = nX1 + nY1*10;
+        coord2 = nX2 + nY2*10;
+        coord3 = nX3 + nY3*10;
+        if(coord0>199 || coord1 > 199 || coord2 > 199 || coord3 > 199)
+            next_collision=0;
+        else begin
+            next_collision[0] = Game_Board[coord0];
+            next_collision[1] = Game_Board[coord1];
+            next_collision[2] = Game_Board[coord2];
+            next_collision[3] = Game_Board[coord3];
+        end
+    end
 
     //Tetronimo types and rotations
     Tetronimo T_current(tetronimo_type,rot,{cornerX,cornerY},block0,block1,block2,block3);
     Tetronimo T_next(tetronimo_type,next_rot,{next_cornerX,next_cornerY},next_block0,next_block1,next_block2,next_block3);
-    
+
     always@(posedge clock) begin
         if(~(next_out_of_bounds || next_collision || init)) begin
                     cornerX <= next_cornerX;
@@ -78,7 +96,7 @@ module Falling_Block(
                     rot <= next_rot;
                     fail_fall <= 0;
                 end
-            else 
+            else
                 fail_fall <= fall;
         
     end
@@ -87,7 +105,7 @@ module Falling_Block(
         if(init) begin
             //set block to top
             cornerX=4;
-            cornerY=18;
+            cornerY=21;
             next_cornerX=cornerX;
             next_cornerY=cornerY;
             rot=0;
