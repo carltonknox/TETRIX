@@ -1,0 +1,102 @@
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2019.1 (lin64) Build 2552052 Fri May 24 14:47:09 MDT 2019
+| Date         : Fri Nov  4 14:45:28 2022
+| Host         : vlsi16 running 64-bit CentOS Linux release 7.9.2009 (Core)
+| Command      : report_control_sets -verbose -file top_level_control_sets_placed.rpt
+| Design       : top_level
+| Device       : xc7a100t
+--------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    24 |
+|    Minimum number of control sets                        |    24 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |   154 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    24 |
+| >= 0 to < 4        |    21 |
+| >= 4 to < 6        |     1 |
+| >= 6 to < 8        |     1 |
+| >= 8 to < 10       |     0 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |     1 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |               3 |            1 |
+| No           | No                    | Yes                    |              65 |           35 |
+| No           | Yes                   | No                     |               6 |            2 |
+| Yes          | No                    | No                     |               0 |            0 |
+| Yes          | No                    | Yes                    |               4 |            1 |
+| Yes          | Yes                   | No                     |               0 |            0 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------------------------------+----------------------------------------+------------------+------------------+----------------+
+|              Clock Signal              |              Enable Signal             | Set/Reset Signal | Slice Load Count | Bel Load Count |
++----------------------------------------+----------------------------------------+------------------+------------------+----------------+
+|  cd/genblk1[8].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[4].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[6].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[12].cd1_/divided_clk_reg_0 |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[2].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[11].cd1_/divided_clk_reg_0 |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[10].cd1_/divided_clk_reg_0 |                                        | reset_IBUF       |                1 |              1 |
+|  CLK_IBUF_BUFG                         |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[3].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[7].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[13].cd1_/divided_clk_reg_0 |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[14].cd1_/divided_clk_reg_0 |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[0].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[18].cd1_/divided_clk_reg_0 |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[17].cd1_/divided_clk_reg_0 |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[1].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[16].cd1_/divided_clk_reg_0 |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[15].cd1_/divided_clk_reg_0 |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[5].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+|  cd/genblk1[9].cd1_/divided_clk_reg_0  |                                        | reset_IBUF       |                1 |              1 |
+| ~CLK_DIV_BUFG                          |                                        |                  |                1 |              3 |
+|  CLK_DIV_BUFG                          | ctrl_path/FSM_onehot_state_reg_n_0_[7] | reset_IBUF       |                1 |              4 |
+| ~CLK_DIV_BUFG                          |                                        | reset_IBUF       |                2 |              6 |
+|  CLK_DIV_BUFG                          |                                        | reset_IBUF       |               15 |             45 |
++----------------------------------------+----------------------------------------+------------------+------------------+----------------+
+
+

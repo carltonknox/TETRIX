@@ -1,0 +1,8 @@
+0.6
+2019.1
+May 24 2019
+14:51:52
+/ad/eng/users/c/k/cknox/EC551/RGB_MATRIX/RGB_MATRIX.sim/sim_1/behav/xsim/glbl.v,1558713910,verilog,,,,glbl,,,,,,,,
+/ad/eng/users/c/k/cknox/EC551/RGB_MATRIX/RGB_MATRIX.srcs/sim_1/new/tb.v,1667569470,verilog,,,,tb,,,,,,,,
+/ad/eng/users/c/k/cknox/EC551/RGB_MATRIX/RGB_MATRIX.srcs/sources_1/new/RGB_MATRIX.v,1667584819,verilog,,/ad/eng/users/c/k/cknox/EC551/RGB_MATRIX/RGB_MATRIX.srcs/sources_1/new/clock_divider.v,,led_matrix_ctrl_path;led_matrix_data_path;top_level;two_port_ram,,,,,,,,
+/ad/eng/users/c/k/cknox/EC551/RGB_MATRIX/RGB_MATRIX.srcs/sources_1/new/clock_divider.v,1667570194,verilog,,/ad/eng/users/c/k/cknox/EC551/RGB_MATRIX/RGB_MATRIX.srcs/sim_1/new/tb.v,,clock_div_1;clock_div_22;clock_divider,,,,,,,,
