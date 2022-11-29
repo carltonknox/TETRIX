@@ -52,5 +52,31 @@ module Tetris(input clock,
                      {X0,Y0},
                      {X1,Y1},
                      {X2,Y2},
-                     {X3,Y3});
+                     {X3,Y3},
+                     out_of_bounds);
+                     
+    always@(*) begin
+        Tetris_Board = Game_Board;
+        if(!out_of_bounds) begin
+            Tetris_Board[X0+Y0*10]=1;
+            Tetris_Board[X1+Y1*10]=1;
+            Tetris_Board[X2+Y2*10]=1;
+            Tetris_Board[X3+Y3*10]=1;
+        end
+    end           
+    reg [2:0] counter;
+    always@(posedge clock) begin
+        if(reset) begin
+            counter<=0;
+            Game_Board<=0;
+            tetronimo_type<=counter;
+            init<=1;
+            fall<=0;
+        end
+        else begin
+            init<=0;
+            fall<=1;
+            counter<=counter+1;
+        end
+    end
 endmodule
