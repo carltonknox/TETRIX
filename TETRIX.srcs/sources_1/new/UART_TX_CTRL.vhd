@@ -51,12 +51,12 @@ architecture Behavioral of UART_TX_CTRL is
 
 type TX_STATE_TYPE is (RDY, LOAD_BIT, SEND_BIT);
 
-constant BIT_TMR_MAX : std_logic_vector(13 downto 0) := "10100010110000"; --10416 = (round(100MHz / 9600)) - 1
+constant BIT_TMR_MAX : std_logic_vector(9 downto 0) := "1101100011"; --867 = (round(100MHz / 115200Hz)) - 1
 constant BIT_INDEX_MAX : natural := 10;
 
 --Counter that keeps track of the number of clock cycles the current bit has been held stable over the
 --UART TX line. It is used to signal when the ne
-signal bitTmr : std_logic_vector(13 downto 0) := (others => '0');
+signal bitTmr : std_logic_vector(9 downto 0) := (others => '0');
 
 --combinatorial logic that goes high when bitTmr has counted to the proper value to ensure
 --a 9600 baud rate

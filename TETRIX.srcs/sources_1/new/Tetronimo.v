@@ -90,26 +90,35 @@ module Falling_Block(
     Tetronimo T_next(tetronimo_type,next_rot,{next_cornerX,next_cornerY},next_block0,next_block1,next_block2,next_block3);
 
     always@(posedge clock) begin
-        if(~(next_out_of_bounds || next_collision || init)) begin
-                    cornerX <= next_cornerX;
-                    cornerY <= next_cornerY;
-                    rot <= next_rot;
-                    fail_fall <= 0;
-                end
+        if(init) begin
+            cornerX=4;
+            cornerY=21;
+            rot=0;
+        end
+        else begin
+            if(~(next_out_of_bounds || next_collision || init)) begin
+                        cornerX <= next_cornerX;
+                        cornerY <= next_cornerY;
+                        rot <= next_rot;
+                        fail_fall <= 0;
+            end
             else
                 fail_fall <= fall;
+        end
         
     end
     
     always@(posedge clock) begin
         if(init) begin
             //set block to top
-            cornerX=4;
-            cornerY=21;
-            next_cornerX=cornerX;
-            next_cornerY=cornerY;
-            rot=0;
-            fail_fall=fall;
+//            cornerX=4;
+//            cornerY=21;
+            next_cornerX=4;
+            next_cornerY=21;
+//            next_cornerX=cornerX;
+//            next_cornerY=cornerY;
+//            rot=0;
+//            fail_fall=fall;
         end
         else begin
             {next_cornerX,next_cornerY,next_rot}={cornerX,cornerY,rot};
