@@ -20,13 +20,18 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module TETRIX(
+module TETRIX#(parameter fallcycles = 25000000)(
     input clock,
     input reset,
     output uart_tx,
     output [3:0] out_of_bounds,
     output fall_fail
     );
+    reg clock_2;
+    initial 
+        clock_2=0;
+    always@(posedge clock)
+        clock_2<=~clock_2;
     wire [199:0] G0;
     wire [199:0] G1;
     wire [199:0] G2;
@@ -38,7 +43,7 @@ module TETRIX(
     wire [3:0] resets;
     
     assign resets[0]=reset;
-    Tetris T(clock,control0,resets[0],G0,out_of_bounds,fall_fail);
+    Tetris #(.fallcycles(fallcycles)) T(clock_2,control0,resets[0],G0,out_of_bounds,fall_fail);
     wire ready;
     wire [7:0] data;
     wire send;

@@ -11,7 +11,7 @@ void setup() {
   for(int i = 0;i<GAMES;i++)
     panel.drawRect(2+i*16, 5, 13+i*16, 26, panel.WHITE, false); //4 white squares for the play area
 
-  Serial.begin(115200);
+  Serial.begin(9600);
 
 }
   
@@ -23,11 +23,14 @@ void loop() {
   //input 1 == j, or X value
   //input 2 == k, or Y value
   if (Serial.available() > 4) {
-    game = ((int)Serial.read()-48)%4;
-    j = ((int)Serial.read()-48)%10;
-    k = ((int)Serial.read()-48)%20;
-    color=((int)Serial.read()-48)%26;
-    Serial.read();
+    String input = Serial.readStringUntil('\n');
+//    Serial.print(input);
+//    Serial.write(input[0]);
+    game = (input[0]-48)%4;
+    j = (input[1]-48)%10;
+    k = (input[2]-48)%20;
+    color=(input[3]-48)%26;
+//    while(Serial.read()!='\n');
     Serial.write('0'+game);
     Serial.write('0'+j);
     Serial.write('0'+k);
@@ -37,5 +40,6 @@ void loop() {
   }
   
   panel.displayBuffer(); //makes the buffer visible and the leds all blinky blinky
+//  delay(10);
   
 }

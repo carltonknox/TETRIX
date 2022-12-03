@@ -20,7 +20,9 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Tetris(input clock,
+module Tetris#(
+    parameter fallcycles = 25000000)(
+    input clock,
     input [3:0] control, //0000 = no input, 0001 = right, 0010 = left, 0100 = up (insta fall), 1000 = down (slow fast fall), 0011 = rotate right 1100 = rotate left
     input reset,
     output reg [199:0] Tetris_Board, // Game Board | Falling Block location
@@ -54,19 +56,24 @@ module Tetris(input clock,
         if(~out_of_bounds[3])
             Tetris_Board[X3+Y3*10]=1;
     end           
-    reg [2:0] counter;
+    reg [24:0] counter;
     always@(posedge clock) begin
         if(reset) begin
             counter<=0;
             Game_Board<=0;
-            tetronimo_type<=counter;
+            tetronimo_type<=counter[2:0];
             init<=1;
             fall<=0;
         end
         else begin
             init<=0;
-            fall<=1;
             counter<=counter+1;
+            if(counter==fallcycles) begin
+                counter<=0;
+                fall<=1;
+            end
+            else
+                fall<=0;
         end
     end
 endmodule
