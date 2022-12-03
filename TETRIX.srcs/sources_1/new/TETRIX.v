@@ -25,7 +25,9 @@ module TETRIX#(parameter fallcycles = 25000000)(
     input reset,
     output uart_tx,
     output [3:0] out_of_bounds,
-    output fall_fail
+    output fall_fail,
+    input PS2_CLK,
+    input PS2_DATA
     );
     reg clock_2;
     initial 
@@ -44,6 +46,8 @@ module TETRIX#(parameter fallcycles = 25000000)(
     
     assign resets[0]=reset;
     Tetris #(.fallcycles(fallcycles)) T(clock_2,control0,resets[0],G0,out_of_bounds,fall_fail);
+    controller player0(clock,reset,PS2_CLK,PS2_DATA,control0);
+    
     wire ready;
     wire [7:0] data;
     wire send;

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="test_TETRIX_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="test_TETRIX" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="111666666fs"></ZoomStartTime>
+      <ZoomEndTime time="1111666667fs"></ZoomEndTime>
+      <Cursor1Time time="945000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="137"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="13" />
+   <wvobject fp_name="/test_TETRIX/clock" type="logic">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/uart_tx" type="logic">
+      <obj_property name="ElementShortName">uart_tx</obj_property>
+      <obj_property name="ObjectShortName">uart_tx</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/out_of_bounds" type="array">
+      <obj_property name="ElementShortName">out_of_bounds[3:0]</obj_property>
+      <obj_property name="ObjectShortName">out_of_bounds[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/fall_fail" type="logic">
+      <obj_property name="ElementShortName">fall_fail</obj_property>
+      <obj_property name="ObjectShortName">fall_fail</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/printer/send" type="logic">
+      <obj_property name="ElementShortName">send</obj_property>
+      <obj_property name="ObjectShortName">send</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/printer/state" type="array">
+      <obj_property name="ElementShortName">state[8:0]</obj_property>
+      <obj_property name="ObjectShortName">state[8:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/printer/nstate" type="array">
+      <obj_property name="ElementShortName">nstate[8:0]</obj_property>
+      <obj_property name="ObjectShortName">nstate[8:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/printer/ready" type="logic">
+      <obj_property name="ElementShortName">ready</obj_property>
+      <obj_property name="ObjectShortName">ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/printer/g" type="array">
+      <obj_property name="ElementShortName">g[1:0]</obj_property>
+      <obj_property name="ObjectShortName">g[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/printer/j" type="array">
+      <obj_property name="ElementShortName">j[3:0]</obj_property>
+      <obj_property name="ObjectShortName">j[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/printer/k" type="array">
+      <obj_property name="ElementShortName">k[4:0]</obj_property>
+      <obj_property name="ObjectShortName">k[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/printer/data" type="array">
+      <obj_property name="ElementShortName">data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">data[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>
