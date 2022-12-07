@@ -40,7 +40,7 @@ module controller(
     );
     // player control inputs
     parameter NO_INPUT = 4'b0000, RIGHT = 4'b0001, LEFT = 4'b1000, INSTA_FALL = 4'b0100, FAST_FALL = 4'b0010, ROTATE_RIGHT = 4'b0011, ROTATE_LEFT = 4'b1100;
-    
+    wire flag;
     wire [31:0]keycode;
     /*
     P1:
