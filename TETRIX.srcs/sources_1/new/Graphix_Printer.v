@@ -51,14 +51,16 @@ module Graphix_Printer(
     assign k_out = {3'b0,k};
     reg [8:0] state;
     reg [8:0] nstate;
+    initial CGp<={200*4{8'h04}};
+    initial old_G<=0;
     always @(posedge clock) begin
         if(reset) begin
             {g,j,k}=0;
             send=0;
             state=0;
             nstate = 1;
-            CGp<={200*4{8'h04}};
-            old_G<=0;
+//            CGp<={200*4{8'h04}};
+//            old_G<=0;
         end
         else begin
             case(state)
