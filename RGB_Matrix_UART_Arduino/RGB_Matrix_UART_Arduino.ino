@@ -26,17 +26,20 @@ void loop() {
     String input = Serial.readStringUntil('\n');
 //    Serial.print(input);
 //    Serial.write(input[0]);
-    game = (input[0]-48)%4;
-    j = (input[1]-48)%10;
-    k = (input[2]-48)%20;
-    color=(input[3]-48)%26;
-//    while(Serial.read()!='\n');
-    Serial.write('0'+game);
-    Serial.write('0'+j);
-    Serial.write('0'+k);
-    Serial.write('0'+color);
-    Serial.write("\n");
-    panel.drawRect(3+game*16+j,5+(20-k),3+game*16+j,5+(20-k),color,false);
+    if(input.length()==4) {
+      game = (input[0]-48)%4;
+      j = (input[1]-48)%10;
+      k = (input[2]-48)%20;
+      color=(input[3]-48)%26;
+  //    while(Serial.read()!='\n');
+//      Serial.write('0'+game);
+//      Serial.write('0'+j);
+//      Serial.write('0'+k);
+//      Serial.write('0'+color);
+//      Serial.write("\n");
+    
+      panel.drawRect(3+game*16+j,5+(20-k),3+game*16+j,5+(20-k),color,false);
+    }
   }
   
   panel.displayBuffer(); //makes the buffer visible and the leds all blinky blinky
