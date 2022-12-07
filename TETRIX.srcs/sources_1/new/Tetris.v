@@ -27,9 +27,12 @@ module Tetris#(
     input reset,
     output reg [199:0] Tetris_Board, // Game Board | Falling Block location
     output [3:0] out_of_bounds,
-    output fail_fall
+    output fail_fall,
+    output reg [1599:0] Color_Board//10x20 game board of 8 bit colors
     );
     reg [199:0] Game_Board; //10x20 game board index using X+Y*10
+    reg [1599:0] Game_Board_Color;
+//    reg [1599:0] Color_Board;//10x20 game board of 8 bit colors
     reg [2:0] tetronimo_type; // type of tetronimo of falling block
     reg init;//set location to top of board
     reg fall;
@@ -44,36 +47,77 @@ module Tetris#(
                      {X2,Y2},
                      {X3,Y3},
                      out_of_bounds);
-                     
+    wire [7:0] fb_color;
+    Tetronimo_Color TC(tetronimo_type,fb_color);      
     always@(*) begin
         Tetris_Board = Game_Board;
+        Color_Board = Game_Board_Color;//TODO change to GAME_BOARD
         if(~out_of_bounds[0])
             Tetris_Board[X0+Y0*10]=1;
+            Color_Board[(X0+Y0*10)*8 +:8]=fb_color;
         if(~out_of_bounds[1])
             Tetris_Board[X1+Y1*10]=1;
+            Color_Board[(X1+Y1*10)*8 +:8]=fb_color;
         if(~out_of_bounds[2])
             Tetris_Board[X2+Y2*10]=1;
+            Color_Board[(X2+Y2*10)*8 +:8]=fb_color;
         if(~out_of_bounds[3])
             Tetris_Board[X3+Y3*10]=1;
+            Color_Board[(X3+Y3*10)*8 +:8]=fb_color;
     end           
     reg [24:0] counter;
+    reg [3:0] state;
+    reg done_breaking;
+    initial counter<=0;
     always@(posedge clock) begin
+        counter<=counter+1;
         if(reset) begin
-            counter<=0;
             Game_Board<=0;
+            state=0;
             tetronimo_type<=counter[2:0];
             init<=1;
             fall<=0;
+            Game_Board_Color<={200{8'h04}};
         end
         else begin
-            init<=0;
-            counter<=counter+1;
-            if(counter==fallcycles) begin
-                counter<=0;
-                fall<=1;
-            end
-            else
-                fall<=0;
+            case(state)
+                0: begin 
+                    init<=1;
+                    fall<=0;
+                    tetronimo_type<=counter[2:0];
+                    state<=1;//begin "freefall"
+                    
+                end
+                1: begin //freefall
+                    init<=0;
+                    if(counter==fallcycles) begin
+                        counter<=0;
+                        fall<=1;
+                    end
+                    else
+                        fall<=0;
+                    if(fail_fall) begin
+                        state<=2;//begin "set in stone" stage
+                    end
+                end
+                2: begin//set in stone
+                    Game_Board[X3+Y3*10]<=1;
+                    Game_Board_Color[(X3+Y3*10)*8 +:8]<=fb_color;
+                    Game_Board[X2+Y2*10]<=1;
+                    Game_Board_Color[(X2+Y2*10)*8 +:8]<=fb_color;
+                    Game_Board[X1+Y1*10]<=1;
+                    Game_Board_Color[(X1+Y1*10)*8 +:8]<=fb_color;
+                    Game_Board[X0+Y0*10]<=1;
+                    Game_Board_Color[(X0+Y0*10)*8 +:8]<=fb_color;
+                    init<=1;
+                    state<=3;
+                end
+                3: begin//break lines
+                    done_breaking<=1;
+                    if(done_breaking)
+                        state<=0;//new tetronimo time
+                end
+            endcase
         end
     end
 endmodule

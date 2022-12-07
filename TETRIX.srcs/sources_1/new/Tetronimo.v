@@ -350,3 +350,20 @@ always@(*)
     endcase
 endmodule
 
+module Tetronimo_Color(
+    input [2:0] tetronimo_type,
+    output reg [7:0] tetronimo_color
+);
+    always@(tetronimo_type) begin
+        case(tetronimo_type)
+            0: tetronimo_color = 7;
+            1: tetronimo_color = 2;
+            2: tetronimo_color = 13;
+            3: tetronimo_color = 6;
+            4: tetronimo_color = 1;
+            5: tetronimo_color = 5;
+            6: tetronimo_color = 0;
+            default: tetronimo_color = 4;
+        endcase
+    end
+endmodule

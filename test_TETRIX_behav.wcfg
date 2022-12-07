@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="111666666fs"></ZoomStartTime>
-      <ZoomEndTime time="1111666667fs"></ZoomEndTime>
-      <Cursor1Time time="945000000fs"></Cursor1Time>
+      <ZoomStartTime time="10000000000fs"></ZoomStartTime>
+      <ZoomEndTime time="110000000000fs"></ZoomEndTime>
+      <Cursor1Time time="13000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="137"></ValueColumnWidth>
+      <ValueColumnWidth column_width="132"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="13" />
+   <WVObjectSize size="16" />
    <wvobject fp_name="/test_TETRIX/clock" type="logic">
       <obj_property name="ElementShortName">clock</obj_property>
       <obj_property name="ObjectShortName">clock</obj_property>
@@ -72,5 +72,17 @@
       <obj_property name="ElementShortName">data[7:0]</obj_property>
       <obj_property name="ObjectShortName">data[7:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/T0/tetronimo_type" type="array">
+      <obj_property name="ElementShortName">tetronimo_type[2:0]</obj_property>
+      <obj_property name="ObjectShortName">tetronimo_type[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/T0/fb_color" type="array">
+      <obj_property name="ElementShortName">fb_color[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fb_color[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_TETRIX/TX/T0/Game_Board_Color" type="array">
+      <obj_property name="ElementShortName">Game_Board_Color[1599:0]</obj_property>
+      <obj_property name="ObjectShortName">Game_Board_Color[1599:0]</obj_property>
    </wvobject>
 </wave_config>
