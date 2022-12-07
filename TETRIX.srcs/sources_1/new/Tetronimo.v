@@ -35,6 +35,11 @@ module Falling_Block(
     A generic tetronimo is defined by a 4by4 space, and each tetronimos has 4 blocks in this space. cornerX and Y define the bottom left corner. 
     This is for ease of rotation. Each rotation will just be a redefinition of blocks 0-3 relative to the corner.
     **/
+    
+    // player control inputs
+    parameter NO_INPUT = 4'b0000, RIGHT = 4'b0001, LEFT = 4'b1000, INSTA_FALL = 4'b0100, FAST_FALL = 4'b0010, ROTATE_RIGHT = 4'b0011, ROTATE_LEFT = 4'b1100;
+    
+    
     reg [8:5] cornerX;
     reg [4:0] cornerY;
     reg [8:5] next_cornerX;
@@ -127,22 +132,22 @@ module Falling_Block(
             end
             else begin
                 case(direct)
-                4'b0001 : begin//move right
+                RIGHT : begin//move right
                     next_cornerX = cornerX+1;
                 end
-                4'b1000 : begin //move left
+                LEFT : begin //move left
                     next_cornerX = cornerX-1;
                 end
-                4'b0100 : begin//instant fall //probably not handled here
+                INSTA_FALL : begin//instant fall //probably not handled here
                 
                 end
-                4'b0010 : begin//slow fast fall //probably not handled here
+                FAST_FALL : begin//slow fast fall //probably not handled here
                 
                 end
-                4'b0011 : begin//rotate right
+                ROTATE_RIGHT : begin//rotate right
                     next_rot = rot+1;
                 end
-                4'b1100 : begin//rotate left
+                ROTATE_LEFT : begin//rotate left
                     next_rot = rot-1;
                 end
                 default : begin
