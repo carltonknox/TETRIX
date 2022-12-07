@@ -31,9 +31,9 @@ module controller(
            reg [3:0] control3
     /*0000 = no input,
       0001 = right,
-      0010 = left,
+      1000 = left,
       0100 = up (insta fall),
-      1000 = down (slow fast fall),
+      0010 = down (slow fast fall),
       0011 = rotate right,
       1100 = rotate left
     */
@@ -63,8 +63,8 @@ module controller(
             8'h15: control0 <= 4'b1100;
             8'h1D: control0 <= 4'b0100;
             8'h24: control0 <= 4'b0011;
-            8'h1C: control0 <= 4'b0010;
-            8'h1B: control0 <= 4'b1000;
+            8'h1C: control0 <= 4'b1000;
+            8'h1B: control0 <= 4'b0010;
             8'h23: control0 <= 4'b0001;
             default: control0 <= 4'b0000;
         endcase
