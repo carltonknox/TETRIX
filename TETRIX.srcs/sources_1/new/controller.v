@@ -60,12 +60,40 @@ module controller(
         send = flag && (keycode[15:8] != 8'hF0) && (keycode[7:0] != 8'hF0);
         if(send) begin 
         case(keycode[7:0])
-            8'h15: control0 <= 4'b1100;
-            8'h1D: control0 <= 4'b0100;
-            8'h24: control0 <= 4'b0011;
-            8'h1C: control0 <= 4'b1000;
-            8'h1B: control0 <= 4'b0010;
-            8'h23: control0 <= 4'b0001;
+            
+
+            // P1
+            8'h15: control0 <= 4'b1100; // rotate left
+            8'h1D: control0 <= 4'b0100; // up
+            8'h24: control0 <= 4'b0011; // rotate right
+            8'h1C: control0 <= 4'b1000; // left
+            8'h1B: control0 <= 4'b0010; // down
+            8'h23: control0 <= 4'b0001; // right
+            
+            // P2
+            8'h2D: control0 <= 4'b1100;
+            8'h2C: control0 <= 4'b0100;
+            8'h35: control0 <= 4'b0011;
+            8'h2B: control0 <= 4'b1000;
+            8'h34: control0 <= 4'b0010;
+            8'h33: control0 <= 4'b0001;
+            
+            // P3
+            8'h3C: control0 <= 4'b1100;
+            8'h43: control0 <= 4'b0100;
+            8'h44: control0 <= 4'b0011;
+            8'h3B: control0 <= 4'b1000;
+            8'h42: control0 <= 4'b0010;
+            8'h4B: control0 <= 4'b0001;
+            
+            // P4
+            8'h22: control0 <= 4'b1100;
+            8'h21: control0 <= 4'b0100;
+            8'h2A: control0 <= 4'b0011;
+            8'h32: control0 <= 4'b1000;
+            8'h31: control0 <= 4'b0010;
+            8'h3A: control0 <= 4'b0001;
+            
             default: control0 <= 4'b0000;
         endcase
         end
