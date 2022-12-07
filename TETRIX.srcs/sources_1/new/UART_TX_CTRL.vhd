@@ -52,7 +52,9 @@ architecture Behavioral of UART_TX_CTRL is
 type TX_STATE_TYPE is (RDY, LOAD_BIT, SEND_BIT);
 
 
-constant BIT_TMR_MAX : std_logic_vector(13 downto 0) := "10100010110000"; --10416 = (round(100MHz / 9600)) - 1
+--constant BIT_TMR_MAX : std_logic_vector(13 downto 0) := "10100010110000"; --10416 = (round(100MHz / 9600)) - 1
+constant BIT_TMR_MAX : std_logic_vector(13 downto 0) := "01010001010111"; --5207 = (round(50MHz / 9600)) - 1
+
 --constant BIT_TMR_MAX : std_logic_vector(13 downto 0) := "00000000000000"; --10416 = (round(100MHz / 9600)) - 1 //debug
 constant BIT_INDEX_MAX : natural := 10;
 

@@ -53,6 +53,6 @@ module TETRIX#(parameter fallcycles = 25000000)(
     wire ready;
     wire [7:0] data;
     wire send;
-    UART_TX_CTRL UTC(.CLK(clock),.READY(ready),.UART_TX(uart_tx),.DATA(data),.SEND(send));
-    Graphix_Printer printer(clock,ready,data,send,reset,G0,G1,G2,G3,CG0,CG0,CG0,CG0);
+    UART_TX_CTRL UTC(.CLK(clock_2),.READY(ready),.UART_TX(uart_tx),.DATA(data),.SEND(send));
+    Graphix_Printer printer(clock_2,ready,data,send,reset,G0,G1,G2,G3,CG0,CG0,CG0,CG0);
 endmodule
