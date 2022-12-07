@@ -49,7 +49,7 @@ module Tetris#(
                      out_of_bounds);
     wire [7:0] fb_color;
     Tetronimo_Color TC(tetronimo_type,fb_color);      
-    always@(*) begin
+    always@(posedge clock) begin
         Tetris_Board = Game_Board;
         Color_Board = Game_Board_Color;//TODO change to GAME_BOARD
         if(~out_of_bounds[0])
