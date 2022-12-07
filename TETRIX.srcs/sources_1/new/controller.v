@@ -69,5 +69,8 @@ module controller(
             default: control0 <= 4'b0000;
         endcase
         end
+        else begin
+            control0 <= 4'b0000;
+        end
     end
 endmodule
