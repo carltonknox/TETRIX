@@ -27,7 +27,8 @@ module TETRIX#(parameter fallcycles = 25000000)(
     output [3:0] out_of_bounds,
     output fall_fail,
     input PS2_CLK,
-    input PS2_DATA
+    input PS2_DATA,
+    output [3:0] player_0
     );
     reg clock_2;
     initial 
@@ -46,13 +47,12 @@ module TETRIX#(parameter fallcycles = 25000000)(
     wire [3:0] resets;
     
     assign resets[0]=reset;
-
     Tetris #(.fallcycles(fallcycles)) T0(clock_2,control0,resets[0],G0,out_of_bounds,fall_fail,CG0);
     controller players(clock,reset,PS2_CLK,PS2_DATA,control0, control1, control2, control3);
-    
+    assign player_0=control0;
     wire ready;
     wire [7:0] data;
     wire send;
     UART_TX_CTRL UTC(.CLK(clock),.READY(ready),.UART_TX(uart_tx),.DATA(data),.SEND(send));
-    Graphix_Printer printer(clock,ready,data,send,reset,G0,G1,G2,G3,CG0);
+    Graphix_Printer printer(clock,ready,data,send,reset,G0,G1,G2,G3,CG0,CG0,CG0,CG0);
 endmodule

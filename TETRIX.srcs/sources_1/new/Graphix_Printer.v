@@ -105,7 +105,7 @@ module Graphix_Printer(
                     state<=0;
 
 //                    data<=(G[g*200 + j+ k*10])?51:52;//3==white, 4==black
-                    data<=CG0[(j+k*10)*8 +:8]+48;
+                    data<=CG[g*1600 + (j+k*10)*8 +:8]+48;
                 end
                 5: begin//newline
                     nstate<=1;

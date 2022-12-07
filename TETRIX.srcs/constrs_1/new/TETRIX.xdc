@@ -19,5 +19,14 @@ create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_
 set_property -dict {PACKAGE_PIN D4 IOSTANDARD LVCMOS33} [get_ports uart_tx]
 
 #keyboard
-set_property -dict { PACKAGE_PIN F4    IOSTANDARD LVCMOS33 } [get_ports { PS2_CLK }]; #IO_L13P_T2_MRCC_35 Sch=ps2_clk
-set_property -dict { PACKAGE_PIN B2    IOSTANDARD LVCMOS33 } [get_ports { PS2_DATA }]; #IO_L10N_T1_AD15N_35 Sch=ps2_data
+set_property -dict {PACKAGE_PIN F4 IOSTANDARD LVCMOS33} [get_ports PS2_CLK]
+set_property -dict {PACKAGE_PIN B2 IOSTANDARD LVCMOS33} [get_ports PS2_DATA]
+
+set_property PACKAGE_PIN V16 [get_ports {player_0[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {player_0[3]}]
+set_property PACKAGE_PIN U16 [get_ports {player_0[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {player_0[2]}]
+set_property PACKAGE_PIN U17 [get_ports {player_0[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {player_0[1]}]
+set_property PACKAGE_PIN V17 [get_ports {player_0[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {player_0[0]}]

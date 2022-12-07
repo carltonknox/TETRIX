@@ -23,7 +23,7 @@ module Falling_Block(
     input [2:0] tetronimo_type,
     input init,//set location to top of board
     input fall,
-    input [3:0] direct,//0000 = no input, 0001 = right, 0010 = left, 0100 = up (insta fall), 1000 = down (slow fast fall), 0011 = rotate right 1100 = rotate left 
+    input [3:0] direct,//0000 = no input, 0001 = right, 1000 = left, 0100 = up (insta fall), 0010 = down (slow fast fall), 0011 = rotate right 1100 = rotate left 
     output reg fail_fall,//cannot fall
     output  [8:0] block0,//Board location of tetronimo{[8:5] = X , [4:0] = Y}
     output  [8:0] block1,
@@ -130,13 +130,13 @@ module Falling_Block(
                 4'b0001 : begin//move right
                     next_cornerX = cornerX+1;
                 end
-                4'b0010 : begin //move left
-                    next_cornerX = cornerX+1;
+                4'b1000 : begin //move left
+                    next_cornerX = cornerX-1;
                 end
                 4'b0100 : begin//instant fall //probably not handled here
                 
                 end
-                4'b1000 : begin//slow fast fall //probably not handled here
+                4'b0010 : begin//slow fast fall //probably not handled here
                 
                 end
                 4'b0011 : begin//rotate right
