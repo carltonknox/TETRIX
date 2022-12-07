@@ -67,7 +67,7 @@ module Tetris#(
     end           
     reg [24:0] counter;
     wire [24:0] counterlimit;
-    assign counterlimit = (control==4'b0100)?0:((control==4'b0010)?fallcycles/:fallcycles);
+    assign counterlimit = (control==4'b0100)?0:((control==4'b0010)?fallcycles/3:fallcycles);
     reg [3:0] state;
     reg done_breaking;
     initial counter<=0;
