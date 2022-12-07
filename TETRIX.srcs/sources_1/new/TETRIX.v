@@ -36,7 +36,7 @@ module TETRIX#(parameter fallcycles = 25000000)(
     always@(posedge clock)
         clock_2<=~clock_2;
     wire [199:0] G0;
-    wire [1599:0] CG0;
+    wire [1599:0] CG0,CG1,CG2,CG3;
     wire [199:0] G1;
     wire [199:0] G2;
     wire [199:0] G3;
@@ -48,11 +48,14 @@ module TETRIX#(parameter fallcycles = 25000000)(
     
     assign resets[0]=reset;
     Tetris #(.fallcycles(fallcycles)) T0(clock_2,control0,resets[0],G0,out_of_bounds,fall_fail,CG0);
-    controller players(clock,reset,PS2_CLK,PS2_DATA,control0, control1, control2, control3);
+    Tetris #(.fallcycles(fallcycles)) T1(clock_2,control1,resets[0],G1,,,CG1);
+    Tetris #(.fallcycles(fallcycles)) T2(clock_2,control2,resets[0],G2,,,CG2);
+    Tetris #(.fallcycles(fallcycles)) T3(clock_2,control3,resets[0],G3,,,CG3);
+    controller players(clock_2,reset,PS2_CLK,PS2_DATA,control0, control1, control2, control3);
     assign player_0=control0;
     wire ready;
     wire [7:0] data;
     wire send;
     UART_TX_CTRL UTC(.CLK(clock_2),.READY(ready),.UART_TX(uart_tx),.DATA(data),.SEND(send));
-    Graphix_Printer printer(clock_2,ready,data,send,reset,G0,G1,G2,G3,CG0,CG0,CG0,CG0);
+    Graphix_Printer printer(clock_2,ready,data,send,reset,G0,G1,G2,G3,CG0,CG1,CG2,CG3);
 endmodule

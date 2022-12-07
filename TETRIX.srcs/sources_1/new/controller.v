@@ -56,7 +56,7 @@ module controller(
         .flag(flag)
         );
     reg send;
-    always@(clock)begin
+    always@(posedge clock)begin
         send = flag && (keycode[15:8] != 8'hF0) && (keycode[7:0] != 8'hF0);
         if(send) begin 
         case(keycode[7:0])

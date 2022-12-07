@@ -38,6 +38,8 @@ module Graphix_Printer(
     wire [799:0] G;
     reg [799:0] old_G;
     wire [6399:0] CG;
+    reg [6399:0] CGp;
+    reg [7:0] color;
     assign G = {G3,G2,G1,G0};
     assign CG = {CG3,CG2,CG1,CG0};
     reg [1:0] g;//game 0-3
@@ -55,6 +57,8 @@ module Graphix_Printer(
             send=0;
             state=0;
             nstate = 1;
+            CGp<={200*4{8'h04}};
+            old_G<=0;
         end
         else begin
             case(state)
@@ -69,8 +73,9 @@ module Graphix_Printer(
 
                     data<=g_out+48;
                     nstate<=2;
-                    old_G[g*200 + j+ k*10]<=G[g*200 + j+ k*10];
-                    if(G[g*200 + j+ k*10]==old_G[g*200 + j+ k*10]) begin
+//                    CGp[g*1600 + (j+k*10)*8 +:8]<=CG[g*1600 + (j+k*10)*8 +:8];
+//                    if(G[g*200 + j+ k*10]==old_G[g*200 + j+ k*10]) begin
+                    if(CG[g*1600 + (j+k*10)*8 +:8]==CGp[g*1600 + (j+k*10)*8 +:8]) begin
                          if(j==9) begin
                             j<=0;
                             if(k==19) begin
@@ -83,7 +88,7 @@ module Graphix_Printer(
                         state<=1;
                     end
                     else begin
-
+                        color<=CG[g*1600 + (j+k*10)*8 +:8];
                         nstate<=2;
                         state<=0;
                     end
@@ -105,7 +110,8 @@ module Graphix_Printer(
                     state<=0;
 
 //                    data<=(G[g*200 + j+ k*10])?51:52;//3==white, 4==black
-                    data<=CG[g*1600 + (j+k*10)*8 +:8]+48;
+                    data<=color+48;
+                    CGp[g*1600 + (j+k*10)*8 +:8]<=color;
                 end
                 5: begin//newline
                     nstate<=1;

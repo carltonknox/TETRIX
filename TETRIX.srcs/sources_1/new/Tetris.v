@@ -21,7 +21,7 @@
 
 
 module Tetris#(
-    parameter fallcycles = 25000000)(
+    parameter fallcycles = 16500000)(
     input clock,
     input [3:0] control, //0000 = no input, 0001 = right, 0010 = left, 0100 = up (insta fall), 1000 = down (slow fast fall), 0011 = rotate right 1100 = rotate left
     input reset,
@@ -66,6 +66,8 @@ module Tetris#(
             Color_Board[(X3+Y3*10)*8 +:8]=fb_color;
     end           
     reg [24:0] counter;
+    wire [24:0] counterlimit;
+    assign counterlimit = (control==4'b0100)?0:((control==4'b0010)?fallcycles/:fallcycles);
     reg [3:0] state;
     reg done_breaking;
     initial counter<=0;
@@ -84,15 +86,18 @@ module Tetris#(
                 0: begin 
                     init<=1;
                     fall<=0;
-                    tetronimo_type<=counter[2:0];
+                    tetronimo_type<=counter%7;
                     state<=1;//begin "freefall"
                     
                 end
                 1: begin //freefall
                     init<=0;
-                    if(counter==fallcycles) begin
-                        counter<=0;
+                    if(counter>=counterlimit) begin
+                        counter<={21'b0,counter[2:0]};
                         fall<=1;
+                        if(fail_fall) begin
+                            state<=2;//begin "set in stone" stage
+                        end
                     end
                     else
                         fall<=0;
