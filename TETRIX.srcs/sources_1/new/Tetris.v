@@ -81,7 +81,7 @@ module Tetris#(
     reg done_breaking;
     initial counter<=0;
     
-    always@(posedge clock or posedge reset) begin
+    always@(posedge clock) begin
         counter<=counter+1;
         if(reset) begin
             Game_Board<=0;

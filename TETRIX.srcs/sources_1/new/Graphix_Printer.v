@@ -59,8 +59,8 @@ module Graphix_Printer(
             send=0;
             state=0;
             nstate = 1;
-//            CGp<={200*4{8'h04}};
-//            old_G<=0;
+            CGp<={200*4{8'h04}};
+            old_G<=0;
         end
         else begin
             case(state)
