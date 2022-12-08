@@ -152,7 +152,7 @@ module Tetris#(
                     // if not in range, put in zeros for line
                     else begin
                         Game_Board[line_number * 10 +: 10] <= 10'b00000_00000;
-                        Game_Board_Color[line_number * 80 +: 80] <= 80'b0;
+                        Game_Board_Color[line_number * 80 +: 80] <= {10{8'h4}} ;
                         line_number <= line_number + 1; // next line
                     end
                         
