@@ -108,7 +108,7 @@ always @(*) begin
     else begin
         g=vga_hcnt/(64*10/4);
         j=(vga_hcnt%(64*10/4)-30)/10;
-        k=20-((vga_vcnt-140)/10);
+        k=19-((vga_vcnt-140)/10);  
         
         case(g)
             0: color = c0;
