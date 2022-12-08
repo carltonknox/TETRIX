@@ -129,6 +129,8 @@ module Tetris#(
                     Game_Board_Color[(X0+Y0*10)*8 +:8] <= fb_color;
                     init  <= 1;
                     state <= S_BREAK;
+                    line_number <= 0;
+                    line_replace <= 0;
                 end
                 S_BREAK: begin// line break state
                 
