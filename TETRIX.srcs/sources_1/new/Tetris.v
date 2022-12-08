@@ -81,6 +81,11 @@ module Tetris#(
     reg done_breaking;
     initial counter<=0;
     
+    // line break
+    
+    reg [5:0] line_number;
+    reg [5:0] line_replace;
+    
     always@(posedge clock or posedge reset) begin
         counter<=counter+1;
         if(reset) begin
