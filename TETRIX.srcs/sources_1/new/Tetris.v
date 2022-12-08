@@ -126,9 +126,33 @@ module Tetris#(
                     state <= S_BREAK;
                 end
                 S_BREAK: begin// line break state
-                    done_breaking<=1;
-                    if(done_breaking)
-                        state <= S_INIT;//new tetronimo time
+                
+                    // check if target replace line to shift into broken line in range
+                    if (line_replace <= 20) begin
+                        // if in range, check if line is to be broken
+                        if (Game_Board[line_replace * 10 +: 10] == 10'b11111_11111) begin
+                            // if to be broken, check next target line
+                            line_replace <= line_replace + 1;
+                        end
+                        else begin
+                            // if not to be broken, shift line into line_number
+                            Game_Board[line_number * 10 +: 10] <= Game_Board[line_replace * 10 +: 10];
+                            Game_Board_Color[line_number * 80 +: 80] <= Game_Board_Color[line_replace * 80 +: 80];
+                            line_number <= line_number + 1; // next line
+                            line_replace <= line_replace + 1;
+                        end
+                    end 
+                    // if not in range, put in zeros for line
+                    else begin
+                        Game_Board[line_number * 10 +: 10] <= 10'b00000_00000;
+                        Game_Board_Color[line_number * 80 +: 80] <= 80'b0;
+                        line_number <= line_number + 1; // next line
+                    end
+                        
+                    // check if we are done
+                    if(line_number >= 20) begin
+                        state <= S_INIT;                // new tetronimo time
+                    end
                 end
             endcase
         end
