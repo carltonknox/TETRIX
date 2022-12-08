@@ -80,7 +80,7 @@ module Tetris#(
     
     reg [24:0] counter;
     wire [24:0] counterlimit;
-    assign counterlimit = (control==4'b0100) ? 0 : ((control==4'b0010) ? fallcycles/3 : fallcycles);
+    assign counterlimit = (control==4'b0100) ? 0 : ((control==4'b0010) ? (fallcycles>>2) : fallcycles);
     
     reg [1:0] state;
     reg done_breaking;
@@ -135,6 +135,8 @@ module Tetris#(
                     Game_Board_Color[(X0+Y0*10)*8 +:8] <= fb_color;
                     init  <= 1;
                     state <= S_BREAK;
+                    line_number <= 0;
+                    line_replace <= 0;
                 end
                 S_BREAK: begin// line break state
                 
@@ -156,7 +158,7 @@ module Tetris#(
                     // if not in range, put in zeros for line
                     else begin
                         Game_Board[line_number * 10 +: 10] <= 10'b00000_00000;
-                        Game_Board_Color[line_number * 80 +: 80] <= 80'b0;
+                        Game_Board_Color[line_number * 80 +: 80] <= {10{8'h4}} ;
                         line_number <= line_number + 1; // next line
                     end
                         
