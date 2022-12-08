@@ -51,14 +51,16 @@ module vga_sender(
  output reg [3:0] VGA_B,
  output wire VGA_HS,
  output wire VGA_VS,
-    input [1599:0] CG0,
-    input [1599:0] CG1,
-    input [1599:0] CG2,
-    input [1599:0] CG3
+    output reg [3:0] j,//x 0-9
+    output reg [4:0] k,//y 0-19
+    input [7:0]c0,
+    input [7:0]c1,
+    input [7:0]c2,
+    input [7:0]c3
  );
     reg [1:0] g;//game 0-3
-    reg [3:0] j;//x 0-9
-    reg [4:0] k;//y 0-19
+//    reg [3:0] j;//x 0-9
+//    reg [4:0] k;//y 0-19
     reg [7:0] color;
 reg pclk_div_cnt;
 reg pixel_clk;
@@ -106,13 +108,13 @@ always @(*) begin
     else begin
         g=vga_hcnt/(64*10/4);
         j=(vga_hcnt%(64*10/4)-30)/10;
-        k=(vga_vcnt-140)/10;
+        k=20-((vga_vcnt-140)/10);
         
         case(g)
-            0: color = CG0[(j+k*10)*8 +:8];
-            1: color = CG1[(j+k*10)*8 +:8];
-            2: color = CG2[(j+k*10)*8 +:8];
-            3: color = CG3[(j+k*10)*8 +:8];
+            0: color = c0;
+            1: color = c1;
+            2: color = c2;
+            3: color = c3;
         endcase
         case(color)
             default: {VGA_R,VGA_G,VGA_B} = 0;

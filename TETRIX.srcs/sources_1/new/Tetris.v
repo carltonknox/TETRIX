@@ -28,8 +28,13 @@ module Tetris#(
     output reg [199:0] Tetris_Board, // Game Board | Falling Block location
     output [3:0] out_of_bounds,
     output fail_fall,
-    output reg [1599:0] Color_Board//10x20 game board of 8 bit colors
+//    output reg [1599:0] Color_Board,//10x20 game board of 8 bit colors
+    input [3:0] j,
+    input [4:0] k,
+    output [7:0] c
     );
+     reg [1599:0] Color_Board;
+     assign c = Color_Board[(j+k*10)*8 +:8];
     
     // game states 
     parameter S_INIT = 2'h0, S_FALL = 2'h1, S_SET = 2'h2, S_BREAK = 2'h3;
@@ -81,6 +86,12 @@ module Tetris#(
     reg done_breaking;
     initial counter<=0;
     
+    // line break
+    
+    reg [5:0] line_number;
+    reg [5:0] line_replace;
+    
+
     always@(posedge clock) begin
         counter<=counter+1;
         if(reset) begin
@@ -126,9 +137,33 @@ module Tetris#(
                     state <= S_BREAK;
                 end
                 S_BREAK: begin// line break state
-                    done_breaking<=1;
-                    if(done_breaking)
-                        state <= S_INIT;//new tetronimo time
+                
+                    // check if target replace line to shift into broken line in range
+                    if (line_replace <= 20) begin
+                        // if in range, check if line is to be broken
+                        if (Game_Board[line_replace * 10 +: 10] == 10'b11111_11111) begin
+                            // if to be broken, check next target line
+                            line_replace <= line_replace + 1;
+                        end
+                        else begin
+                            // if not to be broken, shift line into line_number
+                            Game_Board[line_number * 10 +: 10] <= Game_Board[line_replace * 10 +: 10];
+                            Game_Board_Color[line_number * 80 +: 80] <= Game_Board_Color[line_replace * 80 +: 80];
+                            line_number <= line_number + 1; // next line
+                            line_replace <= line_replace + 1;
+                        end
+                    end 
+                    // if not in range, put in zeros for line
+                    else begin
+                        Game_Board[line_number * 10 +: 10] <= 10'b00000_00000;
+                        Game_Board_Color[line_number * 80 +: 80] <= 80'b0;
+                        line_number <= line_number + 1; // next line
+                    end
+                        
+                    // check if we are done
+                    if(line_number >= 20) begin
+                        state <= S_INIT;                // new tetronimo time
+                    end
                 end
             endcase
         end
