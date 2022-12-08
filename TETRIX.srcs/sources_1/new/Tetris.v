@@ -39,7 +39,7 @@ module Tetris#(
      assign c = Color_Board[(j+k*10)];
     
     // game states 
-    parameter S_INIT = 2'h0, S_FALL = 2'h1, S_SET = 2'h2, S_BREAK = 2'h3;
+    parameter S_INIT = 3'h0, S_FALL = 3'h1, S_SET = 3'h2, S_BREAK = 3'h3, S_OVER=3'h4;
     
     // player control inputs
     parameter NO_INPUT = 4'b0000, RIGHT = 4'b0001, LEFT = 4'b1000, INSTA_FALL = 4'b0100, FAST_FALL = 4'b0010, ROTATE_RIGHT = 4'b0011, ROTATE_LEFT = 4'b1100;
@@ -92,7 +92,7 @@ module Tetris#(
     wire [24:0] counterlimit;
     assign counterlimit = (control==4'b0100) ? 0 : ((control==4'b0010) ? (fallcycles>>2) : fallcycles);
     
-    reg [1:0] state;
+    reg [2:0] state;
     reg done_breaking;
     initial counter<=0;
     
@@ -131,7 +131,10 @@ module Tetris#(
                         fall <= 0;
                     end 
                     if(fail_fall) begin
-                        state <= S_SET;//begin "set in stone" stage
+                        if(| out_of_bounds)
+                            state <= S_OVER;
+                        else
+                            state <= S_SET;//begin "set in stone" stage
                     end
                 end
                 S_SET: begin// set in stone stage
@@ -176,6 +179,10 @@ module Tetris#(
                     if(line_number >= 20) begin
                         state <= S_INIT;                // new tetronimo time
                     end
+                end
+                S_OVER: begin //finish
+                    Game_Board_Color = 1600'h0;
+                    
                 end
             endcase
         end
