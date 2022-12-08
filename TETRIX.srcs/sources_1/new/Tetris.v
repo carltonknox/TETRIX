@@ -33,8 +33,10 @@ module Tetris#(
     input [4:0] k,
     output [7:0] c
     );
-     reg [1599:0] Color_Board;
-     assign c = Color_Board[(j+k*10)*8 +:8];
+//     reg [1599:0] Color_Board;
+     reg [7:0] Color_Board [199:0];
+//     assign c = Color_Board[(j+k*10)*8 +:8];
+     assign c = Color_Board[(j+k*10)];
     
     // game states 
     parameter S_INIT = 2'h0, S_FALL = 2'h1, S_SET = 2'h2, S_BREAK = 2'h3;
@@ -61,21 +63,29 @@ module Tetris#(
     wire [7:0] fb_color;
     Tetronimo_Color TC(tetronimo_type,fb_color);  
         
+    integer i;
     always@(posedge clock) begin
+
         Tetris_Board = Game_Board;
-        Color_Board = Game_Board_Color;//TODO change to GAME_BOARD
+//        Color_Board = Game_Board_Color;//TODO change to GAME_BOARD
+        for(i = 0;i<200;i=i+1)
+            Color_Board[i] = Game_Board_Color[i*8 +:8];//TODO change to GAME_BOARD
         if(~out_of_bounds[0])
             Tetris_Board[X0+Y0*10]=1;
-            Color_Board[(X0+Y0*10)*8 +:8]=fb_color;
+//            Color_Board[(X0+Y0*10)*8+:8]=fb_color;
+            Color_Board[(X0+Y0*10)]=fb_color;
         if(~out_of_bounds[1])
             Tetris_Board[X1+Y1*10]=1;
-            Color_Board[(X1+Y1*10)*8 +:8]=fb_color;
+            Color_Board[(X1+Y1*10)]=fb_color;
+//            Color_Board[(X1+Y1*10)*8 +:8]=fb_color;
         if(~out_of_bounds[2])
             Tetris_Board[X2+Y2*10]=1;
-            Color_Board[(X2+Y2*10)*8 +:8]=fb_color;
+            Color_Board[(X2+Y2*10)]=fb_color;
+//            Color_Board[(X2+Y2*10)*8 +:8]=fb_color;
         if(~out_of_bounds[3])
             Tetris_Board[X3+Y3*10]=1;
-            Color_Board[(X3+Y3*10)*8 +:8]=fb_color;
+            Color_Board[(X3+Y3*10)]=fb_color;
+//            Color_Board[(X3+Y3*10)*8 +:8]=fb_color;
     end
     
     reg [24:0] counter;
