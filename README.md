@@ -8,6 +8,6 @@ Tetrix (a combination of the words Tetris and RGB Matrix) is a FPGA implementati
 Currently, the project has varying functionality
 
 Functionality:
-
+1. 
 Issues:
 1. 
