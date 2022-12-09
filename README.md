@@ -8,6 +8,9 @@ Tetrix (a combination of the words Tetris and RGB Matrix) is a FPGA implementati
 Currently, the project has varying functionality
 
 Functionality:
-1. 
+1. UART RGB Matrix output to Arduino (previous version)
+2. VGA graphics output to screen 
 Issues:
 1. 
+
+Several bitstreams are included in the root folder, for different states of the project.
