@@ -23,7 +23,7 @@ module Falling_Block(
     input [2:0] tetronimo_type,
     input init,//set location to top of board
     input fall,
-    input [3:0] direct,//0000 = no input, 0001 = right, 0010 = left, 0100 = up (insta fall), 1000 = down (slow fast fall), 0011 = rotate right 1100 = rotate left 
+    input [3:0] direct,//0000 = no input, 0001 = right, 1000 = left, 0100 = up (insta fall), 0010 = down (slow fast fall), 0011 = rotate right 1100 = rotate left 
     output reg fail_fall,//cannot fall
     output  [8:0] block0,//Board location of tetronimo{[8:5] = X , [4:0] = Y}
     output  [8:0] block1,
@@ -35,6 +35,11 @@ module Falling_Block(
     A generic tetronimo is defined by a 4by4 space, and each tetronimos has 4 blocks in this space. cornerX and Y define the bottom left corner. 
     This is for ease of rotation. Each rotation will just be a redefinition of blocks 0-3 relative to the corner.
     **/
+    
+    // player control inputs
+    parameter NO_INPUT = 4'b0000, RIGHT = 4'b0001, LEFT = 4'b1000, INSTA_FALL = 4'b0100, FAST_FALL = 4'b0010, ROTATE_RIGHT = 4'b0011, ROTATE_LEFT = 4'b1100;
+    
+    
     reg [8:5] cornerX;
     reg [4:0] cornerY;
     reg [8:5] next_cornerX;
@@ -90,26 +95,35 @@ module Falling_Block(
     Tetronimo T_next(tetronimo_type,next_rot,{next_cornerX,next_cornerY},next_block0,next_block1,next_block2,next_block3);
 
     always@(posedge clock) begin
-        if(~(next_out_of_bounds || next_collision || init)) begin
-                    cornerX <= next_cornerX;
-                    cornerY <= next_cornerY;
-                    rot <= next_rot;
-                    fail_fall <= 0;
-                end
+        if(init) begin
+            cornerX=4;
+            cornerY=21;
+            rot=0;
+        end
+        else begin
+            if(~(next_out_of_bounds || next_collision || init)) begin
+                        cornerX <= next_cornerX;
+                        cornerY <= next_cornerY;
+                        rot <= next_rot;
+                        fail_fall <= 0;
+            end
             else
                 fail_fall <= fall;
+        end
         
     end
     
     always@(posedge clock) begin
         if(init) begin
             //set block to top
-            cornerX=4;
-            cornerY=21;
-            next_cornerX=cornerX;
-            next_cornerY=cornerY;
-            rot=0;
-            fail_fall=fall;
+//            cornerX=4;
+//            cornerY=21;
+            next_cornerX=4;
+            next_cornerY=21;
+//            next_cornerX=cornerX;
+//            next_cornerY=cornerY;
+//            rot=0;
+//            fail_fall=fall;
         end
         else begin
             {next_cornerX,next_cornerY,next_rot}={cornerX,cornerY,rot};
@@ -118,22 +132,22 @@ module Falling_Block(
             end
             else begin
                 case(direct)
-                4'b0001 : begin//move right
+                RIGHT : begin//move right
                     next_cornerX = cornerX+1;
                 end
-                4'b0010 : begin //move left
-                    next_cornerX = cornerX+1;
+                LEFT : begin //move left
+                    next_cornerX = cornerX-1;
                 end
-                4'b0100 : begin//instant fall //probably not handled here
+                INSTA_FALL : begin//instant fall //probably not handled here
                 
                 end
-                4'b1000 : begin//slow fast fall //probably not handled here
+                FAST_FALL : begin//slow fast fall //probably not handled here
                 
                 end
-                4'b0011 : begin//rotate right
+                ROTATE_RIGHT : begin//rotate right
                     next_rot = rot+1;
                 end
-                4'b1100 : begin//rotate left
+                ROTATE_LEFT : begin//rotate left
                     next_rot = rot-1;
                 end
                 default : begin
@@ -341,3 +355,20 @@ always@(*)
     endcase
 endmodule
 
+module Tetronimo_Color(
+    input [2:0] tetronimo_type,
+    output reg [7:0] tetronimo_color
+);
+    always@(tetronimo_type) begin
+        case(tetronimo_type)
+            0: tetronimo_color = 7;
+            1: tetronimo_color = 2;
+            2: tetronimo_color = 13;
+            3: tetronimo_color = 6;
+            4: tetronimo_color = 1;
+            5: tetronimo_color = 5;
+            6: tetronimo_color = 0;
+            default: tetronimo_color = 4;
+        endcase
+    end
+endmodule
